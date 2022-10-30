@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Repository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -36,5 +37,26 @@ class RepositoryControllerTest extends TestCase
              ->assertRedirect('repositories');
 
         $this->assertDatabaseHas('repositories',$data);
+    }
+
+    public function test_update()
+    {
+        $this->withoutExceptionHandling();
+        
+        $repository = Repository::factory()->create();
+        $data = [
+            'url' => $this->faker->url(),
+            'description' => $this->faker->text(),
+        ];
+
+        $user = User::factory()->create();
+
+        $this
+            ->actingAs($user)
+            ->put("repositories/$repository->id", $data)
+            ->assertRedirect("repositories/$repository->id/edit");
+
+        $this->assertDatabaseHas('repositories',$data);
+        
     }
 }
