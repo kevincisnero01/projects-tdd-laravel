@@ -43,9 +43,29 @@ class RepositoryControllerTest extends TestCase
              ->get('repositories')
              ->assertStatus(200)
              ->assertSee($repository->id)
-             ->assertSee($repository->url);
+             ->assertSee($repository->url)
+             ->assertSee('Ver');
     }
 
+    public function test_show()
+    {
+        $user = User::factory()->create();
+        $repository = Repository::factory()->create(['user_id' => $user->id]);
+
+        $this->actingAs($user)
+             ->get("repositories/$repository->id")
+             ->assertStatus(200);
+    }
+
+    public function test_show_policy()
+    {
+        $user = User::factory()->create(); //id = 1
+        $repository = Repository::factory()->create(); // user_id = 2
+
+        $this->actingAs($user)
+             ->get("repositories/$repository->id")
+             ->assertStatus(403);
+    }
 
     public function test_store()
     {
