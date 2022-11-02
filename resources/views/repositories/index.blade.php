@@ -22,7 +22,7 @@
                         <td class="border px-4 py-2">{{ $repository->id }}</td>
                         <td class="border px-4 py-2">{{ $repository->url }}</td>
                         <td>
-                            <a href="{{ $route('repositories.show', $repository) }}">Ver</a>
+                            <a href="{{ route('repositories.show', $repository) }}">Ver</a>
                         </td>
                     </tr>
                     @empty
