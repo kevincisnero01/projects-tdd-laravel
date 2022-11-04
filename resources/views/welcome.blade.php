@@ -14,6 +14,12 @@
     </head>
     <body class="bg-gray-200">
         <h1 class="my-4 mx-auto text-4xl font-weight text-center">Proyectos</h1>
+        @guest
+        <div class="py-2 text-right">
+            <a href="{{ asset('/login') }}" class="py-1 px-3 border bg-white border-gray-400 rounded-full m-1">Iniciar sesion</a>
+            <a href="{{ asset('/register') }}" class="py-1 px-3 border bg-white border-gray-400 rounded-full m-1">Registro</a>    
+        </div>
+        @endguest
         <ul class="w-full bg-white border-r border-gray-300 shadow-xl">
             @foreach ($repositories as $repository)
                 <li class="flex items-center text-black p-2 hover:bg-gray-300">
